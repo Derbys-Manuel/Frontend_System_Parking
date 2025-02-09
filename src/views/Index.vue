@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import table_list from "@/components/table.vue";
+import table_list from "../components/table_list.vue";
 import axios from "axios";
 
 export default {
