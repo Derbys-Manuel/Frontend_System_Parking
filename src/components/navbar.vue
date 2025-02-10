@@ -1,21 +1,16 @@
 <template>
-
     <nav class="navbar  navbar-dark" id="nav-bag">
         <div class="container-fluid ">
             <div class="text-center d-flex">
-                <img class="img-fluid menu" src="@/assets/cochera.png" id="img_logo" alt="">
+                <img class="img-fluid menu" src="@/assets/cochera.png" id="img_logo" alt="" @click="toggleSidebar">
                 <router-link  class="navbar-brand p-2 fs-1" to="/">
                     <h1 id="navbar">
                         Parking System
                     </h1>
                 </router-link> 
             </div>
-            
-         <button @click="alert()">hey</button>
         </div>
     </nav>
-
-
 </template>
 
 <script>
@@ -23,9 +18,8 @@
 export default {
     name: 'Navbar',
     methods: {
-        alert()
-        {
-            console.log('es un evento de vue');
+        toggleSidebar() {
+            this.$emit("toggleSidebar"); 
         }
     }
 }

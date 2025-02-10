@@ -1,11 +1,12 @@
 <template>
-    <a class="btn btn-{{ color_button }}">{{ title }}</a>
+    <button  :class="['btn', color_button, size_button]">{{ title }}</button>
 </template>
 <script>
 export default {
-    name: 'button_prueba',
+    name: 'button_comp',
     props: {
         color_button: String,
+        size_button: String,
         title: String 
     }
 }
