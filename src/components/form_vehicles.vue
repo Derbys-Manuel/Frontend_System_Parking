@@ -8,13 +8,17 @@
           <input type="text" placeholder="Categorias" class="form-control" />
         </div>
         <div class="col-auto">
-          <label_añadir :size_label="size_label" :icon_label="icon_label" :title_label="title_label"/>
+          <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modal_category">
+            <label_añadir :size_label="size_label" :icon_label="icon_label" :title_label="title_label"/>
+          </button>
         </div>
         <div class="col-auto">
           <input type="text" placeholder="Producto" class="form-control" />
         </div>
         <div class="col-auto">
-          <label_añadir :size_label="size_label" :icon_label="icon_label" :title_label="title_label"/>
+          <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modal_product">
+            <label_añadir :size_label="size_label" :icon_label="icon_label" :title_label="title_label"/>
+          </button>
         </div>
         <div class="col-auto">
           <input type="date" placeholder="Fecha" class="form-control" />

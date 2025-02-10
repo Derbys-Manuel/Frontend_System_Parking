@@ -5,7 +5,7 @@
         <sidebar />
       </div>
       <div class="container-fluid">
-          <router-view />
+          <router-view  />
       </div>
   </div>
   
@@ -20,9 +20,6 @@ export default {
   components: {
     Navbar,
     sidebar,
-  },
-  props: {
-    mostrarSidebar: Boolean
   },
   data() {
     return {

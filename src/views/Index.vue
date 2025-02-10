@@ -5,10 +5,13 @@
       <div class="mt-2">
         <form_vehicles v-if="mostrarFormulario" :title="title_button" :size_button="size_button" :color_button="color_button" :title_form="title_form" />
       </div>
-       <div class="text-end">
-        <label_añadir :title="title_label" :size_label="size_label" :icon_label="icon_label" @click="MostrarFormulario"  />
 
-       </div>
+      <modal_comp :modal_title="title_modal_category" :id_btn_modal="id_modal_category" :placeholder_name="placeholder_category" />
+      <modal_comp :modal_title="title_modal_product"  :id_btn_modal="id_modal_product" :placeholder_name="placeholder_product" />
+
+      <div class="text-end">
+      <label_añadir :title="title_label" :size_label="size_label" :icon_label="icon_label" @click="MostrarFormulario"  />
+      </div>
       <table_list :vehicles="vehicles" :cargando="cargando" />
     </div>
   </div>
@@ -18,6 +21,8 @@
 import button_comp from "@/components/button_comp.vue";
 import table_list from "../components/table_list.vue";
 import form_vehicles from "@/components/form_vehicles.vue";
+import modal_comp from "@/components/modal_comp.vue";
+
 
 import axios from "axios";
 import label_añadir from "@/components/label_añadir.vue";
@@ -29,7 +34,8 @@ export default {
     table_list, 
     button_comp,
     form_vehicles,
-    label_añadir
+    label_añadir,
+    modal_comp
   },
   data() {
     return {
@@ -42,7 +48,16 @@ export default {
       title_label: `Añadir`,
       icon_label: `<i class="bi bi-plus fs-5"></i>`,
       size_label: "form-label-sm",
-      mostrarFormulario: false, 
+      mostrarFormulario: false,
+      title_modal_category: 'Formulario Categorias',
+      id_modal_category: "modal_category",
+      title_modal_product:'Formulario Producto',
+      id_modal_product: "modal_product",
+      placeholder_category: "Categoria",
+      placeholder_product: "Producto",
+
+
+
     };
   },
   mounted() {
