@@ -11,6 +11,9 @@
       <tr v-if="cargando">
         <td colspan="3">CARGANDO...</td>
       </tr>
+      <tr v-if="vehicles == 0">
+        <td colspan="3">SIN REGISTROS</td>
+      </tr>
       <tr v-for="vehicle in vehicles" :key="vehicle.id">
         <td >{{ vehicle.id }}</td>
         <td>{{ vehicle.placa }}</td>
