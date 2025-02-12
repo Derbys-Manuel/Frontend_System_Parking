@@ -1,5 +1,5 @@
 <template>
-    <label for="" :class="['menu','fs-5', 'text-success' ,'form-label', 'label_style' , size_label]">[{{ title }}<span v-html="icon_label"></span>]</label>
+    <label for="" :class="['menu','fs-5', 'text-success' ,'form-label', 'label_style' , size_label]" style="white-space: nowrap;">[{{ title }}<span v-html="icon_label"></span>]</label>
 </template>
 
 <script>
