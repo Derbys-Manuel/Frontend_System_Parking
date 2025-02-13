@@ -3,9 +3,13 @@
     <table class="table  table-bordered text-center table-responsive">
       <thead>
         <tr>
-          <th style="background-color: #01a858;" >ID</th>
-          <th style="background-color: #01a858;">Placa</th>
-          <th style="background-color: #01a858;">Creacion</th>
+          <th class="bg_th">ID</th>
+          <th class="bg_th">Placa</th>
+          <th class="bg_th">Categoría</th>
+          <th class="bg_th">Producto</th>
+          <th class="bg_th">Precio</th>
+          <th class="bg_th">Fecha</th>
+          <th class="bg_th">Hora</th>
         </tr>
       </thead>
       <tbody class="table-group-divider" id="contenido">
@@ -18,14 +22,21 @@
         <tr v-for="vehicle in vehicles" :key="vehicle.id">
           <td >{{ vehicle.id }}</td>
           <td>{{ vehicle.placa }}</td>
-          <td>{{ vehicle.created_at }}</td>
+          <td>{{ vehicle.category.name }}</td>
+          <td>{{ vehicle.product.name }}</td>
+          <td>{{ vehicle.category.monto }}</td>
+          <td>{{ vehicle.fecha }}</td>
+          <td>{{ vehicle.hora }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
 <style >
-
+.bg_th{
+  background-color:#01a858 !important;
+  color:white !important;
+}
 </style>
 
 <script>

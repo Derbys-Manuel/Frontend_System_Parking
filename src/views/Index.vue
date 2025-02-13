@@ -4,7 +4,7 @@
     <div  class="col-12">
       <transition name="slide_form">
         <div class="mt-2" v-if="mostrarFormulario">
-          <form_vehicles  :title="title_button" :size_button="size_button" :color_button="color_button" :title_form="title_form" />
+          <form_vehicles :getVehicles="getVehicles"  :title="title_button" :size_button="size_button" :color_button="color_button" :title_form="title_form" />
         </div>
       </transition>
 
@@ -69,6 +69,8 @@ export default {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/v1/vehicles"); 
         this.vehicles = response.data;
+        
+        console.log(this.vehicles);    
       } catch (error) {
         console.error("Error al obtener los vehículos:", error);
       }

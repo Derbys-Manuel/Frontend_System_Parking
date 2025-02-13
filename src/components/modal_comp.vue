@@ -1,19 +1,19 @@
 <template>
-    <div class="modal fade text-center" :id="[id_btn_modal]" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade text-center" :id="id_btn_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
                     <h3>{{ modal_title }}</h3>
-                    <form @submit.prevent="guardar"  class="form-control">
+                    <form @submit.prevent="submit"  class="form-control">
                         <div class="row g-3 align-items-center justify-content-center w-100 mb-2">
                             <div v-if="id_btn_modal=='modal_category'" class="col-auto  " >
-                                <input type="text" v-model="category.name" :placeholder="[placeholder_name]" class="form-control" />
+                                <input type="text" v-model="category.name" :placeholder="placeholder_name" class="form-control" />
                             </div>
                             <div v-if="id_btn_modal=='modal_category'" class="col-auto">
                                 <input type="number" v-model="category.monto" placeholder="Total" class="form-control" />
                             </div>
                             <div v-if="id_btn_modal=='modal_product'" class="col-auto " >
-                                <input type="text" v-model="product.name" :placeholder="[placeholder_name]" class="form-control" />
+                                <input type="text" v-model="product.name" :placeholder="placeholder_name" class="form-control" />
                             </div>
                             <div class="">
                                 <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
@@ -21,8 +21,6 @@
                             </div>
                         </div>       
                     </form>
-                    
-
                     <transition name="bounce">
                         <div v-if="mensaje != ''" class="mt-3">
                             <p  v-if="mensaje === 'ok'" class="text-success menu"><strong>¡Registro exitoso!></strong></p>
@@ -48,7 +46,7 @@ export default {
         modal_title: String,
         id_btn_modal: String,
         placeholder_name: String,
-        actualizar: Function
+        update: Function
     },
     data()
     {
@@ -67,18 +65,18 @@ export default {
                 }
     },
     methods: {
-    async guardar() {
+    async submit() {
       try {
         if(this.id_btn_modal=='modal_category'){
-            const respuesta = await axios.post("http://127.0.0.1:8000/api/v1/categories", this.category);
+            await axios.post("http://127.0.0.1:8000/api/v1/categories", this.category);
             this.category = { name: "", monto: ""};
             
         }else{
-            const respuesta = await axios.post("http://127.0.0.1:8000/api/v1/products", this.product);
+            await axios.post("http://127.0.0.1:8000/api/v1/products", this.product);
             this.product = { name: ""};
         }
         this.mensaje = "ok";
-        this.actualizar();
+        this.update();
       } catch (error) {
         console.error("Error al guardar:", error);
         this.mensaje = "error"
