@@ -7,13 +7,13 @@
                     <form @submit.prevent="submit"  class="form-control">
                         <div class="row g-3 align-items-center justify-content-center w-100 mb-2">
                             <div v-if="id_btn_modal=='modal_category'" class="col-auto  " >
-                                <input type="text" v-model="category.name" :placeholder="placeholder_name" class="form-control" />
+                                <input type="text" v-model="category.name" :placeholder="placeholder_name" :class="['form-control', {'border-danger':errors.name && errors.name[0]}]" />
                             </div>
                             <div v-if="id_btn_modal=='modal_category'" class="col-auto">
-                                <input type="number" v-model="category.monto" placeholder="Total" class="form-control" />
+                                <input type="number" v-model="category.monto" placeholder="Total" :class="['form-control', {'border-danger':errors.monto && errors.monto[0]}]" />
                             </div>
                             <div v-if="id_btn_modal=='modal_product'" class="col-auto " >
-                                <input type="text" v-model="product.name" :placeholder="placeholder_name" class="form-control" />
+                                <input type="text" v-model="product.name" :placeholder="placeholder_name" :class="['form-control', {'border-danger':errors.name && errors.name[0]}]" />
                             </div>
                             <div class="">
                                 <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
@@ -43,7 +43,7 @@ export default {
         modal_title: String,
         id_btn_modal: String,
         placeholder_name: String,
-        update: Function
+        get_category_or_product: Function
     },
     data()
     {
@@ -52,7 +52,8 @@ export default {
             color_button: 'btn-success',
             size_button: 'btn-dm',
             mensaje: '',
-            size_text: 'fs-4',
+            size_text: 'fs-6',
+            mensaje: "",
             category: {
                 name: "",
                 monto: "",
@@ -60,29 +61,36 @@ export default {
             product: {
                 name: "",
             },
-            mensaje: "",
-                }
+            errors: {},
+        }
     },
     methods: {
     async submit() {
       try {
         if(this.id_btn_modal=='modal_category'){
-            await axios.post("http://127.0.0.1:8000/api/v1/categories", this.category);
-            this.category = { name: "", monto: ""};
-            
+            await axios.post("http://127.0.0.1:8000/api/v1/categories", this.category).then((res)=> {
+                console.log(res, 'submit category');
+            });
         }else{
-            await axios.post("http://127.0.0.1:8000/api/v1/products", this.product);
-            this.product = { name: ""};
+            await axios.post("http://127.0.0.1:8000/api/v1/products", this.product).then((res)=>{
+                console.log(res, 'submit product');
+            });
         }
+        this.product = {};
+        this.category = {};
+        this.errors= {};
         this.mensaje = "ok";
-        this.update();
+        this.get_category_or_product();
       } catch (error) {
+        if(error.response){
+            this.errors = error.response.data.errors;
+        }
         this.mensaje = "error"
       }
       setTimeout(() => {
                 this.mensaje = "";
             }, 1200);
-    },
+        },
     }
 }
 
