@@ -29,16 +29,13 @@
         </div>
       </div>
     </form>
-    <transition name="bounce">
-        <div v-if="mensaje != '' " class="mt-3">
-            <p  v-if="mensaje === 'ok'" class="text-success menu"><strong>¡Registro exitoso!></strong></p>
-            <p v-if="mensaje === 'error'" class="text-danger menu"> <strong>¡Error al ingresar registro!</strong></p>
-        </div>
-    </transition>
-      <modal_comp :update="getCategories" :modal_title="title_modal_category" :id_btn_modal="id_modal_category" 
-      :placeholder_name="placeholder_category" />
-      <modal_comp :update="getProducts" :modal_title="title_modal_product"  :id_btn_modal="id_modal_product" 
-      :placeholder_name="placeholder_product" />
+    <div class="d-flex justify-content-center">
+      <message :mensaje="mensaje" :size_text="size_message" />
+    </div>
+    <modal_comp :update="getCategories" :modal_title="title_modal_category" :id_btn_modal="id_modal_category" 
+    :placeholder_name="placeholder_category" />
+    <modal_comp :update="getProducts" :modal_title="title_modal_product"  :id_btn_modal="id_modal_product" 
+    :placeholder_name="placeholder_product" />
   </template>
   
   <script>
@@ -48,6 +45,7 @@
   import label_añadir from "./label_añadir.vue";
   import select_comp from './select_comp.vue';
   import axios from 'axios';
+  import message from "./message.vue";
 
   export default {
     name: "form_vehicles",
@@ -55,7 +53,8 @@
       button_comp,
       label_añadir,
       select_comp,
-      modal_comp
+      modal_comp,
+      message
     },
     data(){
       return{
@@ -69,6 +68,8 @@
         product: 'producto',
         category: 'categoria',
         title_label: "",
+        mensaje: "",
+        size_message: "fs-5",
         title_select_product: "Productos",
         title_select_category: "Categorias",
         icon_label: `<i class="bi bi-plus fs-5"></i>`,
@@ -118,12 +119,13 @@
           try {
             await axios.post("http://127.0.0.1:8000/api/v1/vehicles", this.vehicle); 
             this.getVehicles();
+            this.mensaje = "ok";
             this.resetForm();
           } catch (error) {
             console.error("Error al guardar:", error);
             this.mensaje = "error"
-            }
-            setTimeout(() => {
+          }
+          setTimeout(() => {
               this.mensaje = "";
               }, 1200);
             },

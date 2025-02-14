@@ -21,12 +21,7 @@
                             </div>
                         </div>       
                     </form>
-                    <transition name="bounce">
-                        <div v-if="mensaje != ''" class="mt-3">
-                            <p  v-if="mensaje === 'ok'" class="text-success menu"><strong>¡Registro exitoso!></strong></p>
-                            <p v-if="mensaje === 'error'" class="text-danger menu"> <strong>¡Error al ingresar registro!</strong></p>
-                        </div>
-                    </transition>
+                    <message :mensaje="mensaje" :size_text="size_text" />
                 </div>
             </div>
         </div>
@@ -37,10 +32,12 @@
 <script>
 import button_comp from './button_comp.vue';
 import axios from 'axios';
+import message from './message.vue';
 export default {
 
     components: {
-        button_comp
+        button_comp,
+        message
     },
     props: {
         modal_title: String,
@@ -54,6 +51,8 @@ export default {
             title_button: "Submit",
             color_button: 'btn-success',
             size_button: 'btn-dm',
+            mensaje: '',
+            size_text: 'fs-4',
             category: {
                 name: "",
                 monto: "",
@@ -78,7 +77,6 @@ export default {
         this.mensaje = "ok";
         this.update();
       } catch (error) {
-        console.error("Error al guardar:", error);
         this.mensaje = "error"
       }
       setTimeout(() => {
@@ -90,24 +88,3 @@ export default {
 
 </script>
 
-<style>
-.bounce-enter-active {
-  animation: bounce-in 0.5s;
-}
-.bounce-leave-active {
-  animation: bounce-in 0.5s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.25);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-
-</style>

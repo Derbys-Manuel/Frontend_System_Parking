@@ -12,14 +12,14 @@
       <div class="text-end">
       <label_añadir :title="title_label" :size_label="size_label" :icon_label="icon_label" @click="MostrarFormulario"  />
       </div>
-      <table_list :vehicles="vehicles" :cargando="cargando" />
+      <table_list_vehicles :vehicles="vehicles" :cargando="cargando" />
     </div>
   </div>
 </template>
 
 <script>
 import button_comp from "@/components/button_comp.vue";
-import table_list from "../components/table_list.vue";
+import table_list_vehicles from "@/components/table_list_vehicles.vue";
 import form_vehicles from "@/components/form_vehicles.vue";
 import modal_comp from "@/components/modal_comp.vue";
 
@@ -31,7 +31,7 @@ import label_añadir from "@/components/label_añadir.vue";
 export default {
   name: "index",
   components: {
-    table_list, 
+    table_list_vehicles, 
     button_comp,
     form_vehicles,
     label_añadir,
