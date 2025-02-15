@@ -5,7 +5,7 @@
                 <div class="modal-body">
                     <h3>{{ modal_title }}</h3>
                     <form @submit.prevent="submit"  class="form-control">
-                        <div class="row g-3 align-items-center justify-content-center w-100 mb-2">
+                        <div class="row g-3 align-items-center mt-2 justify-content-center w-100 mb-2">
                             <div v-if="id_btn_modal=='modal_category'" class="col-auto  " >
                                 <input type="text" v-model="category.name" :placeholder="placeholder_name" :class="['form-control', {'border-danger':errors.name && errors.name[0]}]" />
                             </div>

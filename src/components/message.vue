@@ -3,6 +3,7 @@
         <div v-if="mensaje != ''" class="mt-3">
             <p  v-if="mensaje === 'ok'" class="text-success menu"><strong :class="size_text">¡Registro exitoso!</strong></p>
             <p v-if="mensaje === 'error'" class="text-danger menu"> <strong :class="size_text">¡Error al ingresar registro!</strong></p>
+            <p v-if="mensaje === 'delete'" class="text-danger menu"> <strong :class="size_text">¡Registro eliminado!</strong></p>
         </div>
     </transition>
 

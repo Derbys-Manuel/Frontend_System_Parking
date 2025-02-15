@@ -4,15 +4,17 @@
     <div  class="col-12">
       <transition name="slide_form">
         <div class="mt-2" v-if="mostrarFormulario">
-          <form_vehicles :getVehicles="getVehicles"  :title="title_button" :size_button="size_button" :color_button="color_button" :title_form="title_form" />
+          <form_vehicles :getVehicles="getVehicles" :getParking="getParking"  :title="title_button" :size_button="size_button" :color_button="color_button" :title_form="title_form" />
         </div>
       </transition>
-
-
-      <div class="text-end">
-      <label_añadir :title="title_label" :size_label="size_label" :icon_label="icon_label" @click="MostrarFormulario"  />
-      </div>
-      <table_list_vehicles :vehicles="vehicles" :cargando="cargando" />
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-sm-12 col-md-7 col-lg-8">
+      <table_list_vehicles :vehicles="vehicles" @toggleFormulario="toggleFormulario" :getParking="getParking" :getVehicles="getVehicles" :cargando="cargando" />
+    </div>
+    <div class="col-sm-12 col-md-5 col-lg-4">
+      <table_list_cochera :vehicles="vehicles_parking" :cargando="cargando" />
     </div>
   </div>
 </template>
@@ -22,16 +24,16 @@ import button_comp from "@/components/button_comp.vue";
 import table_list_vehicles from "@/components/table_list_vehicles.vue";
 import form_vehicles from "@/components/form_vehicles.vue";
 import modal_comp from "@/components/modal_comp.vue";
-
-
 import axios from "axios";
 import label_añadir from "@/components/label_añadir.vue";
+import table_list_cochera from "@/components/table_list_cochera.vue";
 
 
 export default {
   name: "index",
   components: {
-    table_list_vehicles, 
+    table_list_vehicles,
+    table_list_cochera, 
     button_comp,
     form_vehicles,
     label_añadir,
@@ -40,44 +42,53 @@ export default {
   data() {
     return {
       vehicles: null,
+      vehicles_parking: null,
       cargando: false,
+      mostrarFormulario: false,
       title_form: "Placa",
       title_button: "Agregar",
       size_button: "btn-md", 
       color_button: "btn-success",
-      title_label: "Añadir",
-      icon_label: `<i class="bi bi-plus fs-5"></i>`,
-      size_label: "form-label-sm",
-      mostrarFormulario: false,
       title_modal_category: 'Formulario Categorias',
       id_modal_category: "modal_category",
       title_modal_product:'Formulario Producto',
       id_modal_product: "modal_product",
       placeholder_category: "Categoria",
       placeholder_product: "Producto",
-
-
-
     };
   },
   mounted() {
     this.getVehicles();
+    this.getParking();
   },
   methods: {
+    
+    toggleFormulario() {
+      this.mostrarFormulario = !this.mostrarFormulario;
+    },
     async getVehicles() {
       this.cargando = true;
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/v1/vehicles"); 
-        this.vehicles = response.data;
-        
+        await axios.get("http://127.0.0.1:8000/api/v1/vehicles").then((res)=>{
+          this.vehicles = res.data;
+        }); 
         console.log(this.vehicles);    
       } catch (error) {
         console.error("Error al obtener los vehículos:", error);
       }
       this.cargando = false;
     },
-    MostrarFormulario() {
-      this.mostrarFormulario = !this.mostrarFormulario;
+    async getParking() {
+      this.cargando = true;
+      try {
+        await axios.get("http://127.0.0.1:8000/api/v1/vehicles/cochera").then((res)=>{
+          this.vehicles_parking = res.data;
+        }); 
+        console.log(this.vehicles_parking);    
+      } catch (error) {
+        console.error("Error al obtener los vehículos:", error);
+      }
+      this.cargando = false;
     }
 
   },

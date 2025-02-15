@@ -19,10 +19,10 @@
            />
         </div>
         <div class="col-auto">
-          <input v-model="vehicle.fecha" type="date" placeholder="Fecha":class="['form-control', {'border-danger':errors.fecha && errors.fecha[0]}]" />
+          <input v-model="vehicle.fecha" type="date" :class="['form-control', {'border-danger':errors.fecha && errors.fecha[0]}]" />
         </div>
         <div class="col-auto">
-          <input type="time" v-model="vehicle.hora"  placeholder="Hora" :class="['form-control', {'border-danger':errors.hora && errors.hora[0]}]"/>
+          <input type="time" v-model="vehicle.hora" :class="['form-control', {'border-danger':errors.hora && errors.hora[0]}]"/>
         </div>
         <div class="col-auto">
           <button_comp :title="title" :color_button="color_button" :size_button="size_button" type="submit" />
@@ -47,6 +47,10 @@
   import axios from 'axios';
   import message from "./message.vue";
 
+  const now = new Date();
+  const fechaActual = now.toISOString().split('T')[0]; 
+  const horaActual = now.toTimeString().slice(0, 5); 
+
   export default {
     name: "form_vehicles",
     components: {
@@ -54,18 +58,19 @@
       label_añadir,
       select_comp,
       modal_comp,
-      message
+      message, 
     },
+
     data(){
       return{
         vehicle: {
           placa: "",
           category_id: "",
           product_id: "",
-          fecha: "",
-          hora: ""
+          fecha: fechaActual,
+          hora: horaActual
         },
-        errors: {},
+        errors: {},  
         product: 'producto',
         category: 'categoria',
         title_label: "",
@@ -75,6 +80,7 @@
         title_select_category: "Categorias",
         icon_label: `<i class="bi bi-plus fs-5"></i>`,
         size_label: "form-label-sm",
+        size_select: "form-label-sm",
         category_array: null, 
         product_array: null,
         title_modal_category: 'Formulario Categorias',
@@ -91,7 +97,8 @@
         color_button: String,
         size_button: String,
         title: String,
-        getVehicles: Function
+        getVehicles: Function,
+        getParking: Function
     },
     mounted() {
     this.getCategories();
@@ -125,6 +132,7 @@
               console.log(res, 'submit vehicle');
             });
             this.getVehicles();
+            this.getParking();
             this.mensaje = "ok";
             this.vehicle = {};
             this.errors = {};
