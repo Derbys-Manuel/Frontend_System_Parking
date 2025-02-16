@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submit" class="form-control ">
+    <form @submit.prevent="submit_or_update()" class="form-control ">
       <div class="row  g-2 align-items-center justify-content-center w-100">
         <div class="col-2">
           <input type="text" :placeholder="title_form"  v-model="vehicle.placa"   :class="['form-control', {'border-danger':errors.placa && errors.placa[0]}]"/>
@@ -25,7 +25,8 @@
           <input type="time" v-model="vehicle.hora" :class="['form-control', {'border-danger':errors.hora && errors.hora[0]}]"/>
         </div>
         <div class="col-auto">
-          <button_comp :title="title" :color_button="color_button" :size_button="size_button" type="submit" />
+          <button_comp :title="title_button" :color_button="color_button" :size_button="size_button" type="submit" />
+          <button_comp  v-if="mostrarButtonCancel" @click=reset_vehicle class="ms-1" :title="title_buttonCancel" :color_button="color_buttonCancel" :size_button="size_buttonCancel" type="button" />
         </div>
       </div>
     </form>
@@ -71,6 +72,7 @@
           hora: horaActual
         },
         errors: {},  
+        mostrarButtonCancel: false,
         product: 'producto',
         category: 'categoria',
         title_label: "",
@@ -89,22 +91,55 @@
         id_modal_product: "modal_product",
         placeholder_category: "Categoria",
         placeholder_product: "Producto",
+        title_button: 'Guardar',
+        color_button:"btn-success",
+        size_button:"btn-md",
+        title_buttonCancel: 'Cancelar',
+        color_buttonCancel:"btn-danger",
+        size_buttonCancel:"btn-md"
 
       };
     },
     props: {
         title_form: String,
-        color_button: String,
-        size_button: String,
-        title: String,
         getVehicles: Function,
-        getParking: Function
+        getParking: Function,
+        vehicle_edit: Object
     },
     mounted() {
     this.getCategories();
     this.getProducts();
+ 
     },
-    methods: {
+    watch: {
+        vehicle_edit: {
+            handler(newVal) {
+                if (Object.keys(newVal).length > 0) {
+                    this.vehicle = { ...newVal };
+                    this.mostrarButtonCancel = true;
+                    this.title_button = "Editar";
+                }else{
+                  this.mostrarButtonCancel = false;
+                }
+            },
+            deep: true,
+            immediate: true
+          }
+      },
+      methods: { 
+      reset_vehicle(){
+        this.vehicle = {
+          placa: "",
+          category_id: "",
+          product_id: "",
+          fecha: fechaActual,
+          hora: horaActual
+        }
+        this.mostrarButtonCancel = false;
+        this.title_button = "Guardar";
+
+      },
+
       async getCategories() {
         try {
           await axios.get("http://127.0.0.1:8000/api/v1/categories").then((res) => {
@@ -125,29 +160,35 @@
           console.error("Error al obtener los vehículos:", error);
         }   
        },
-       async submit() {
-        console.log(this.vehicle);
-          try {
-            await axios.post("http://127.0.0.1:8000/api/v1/vehicles", this.vehicle).then((res)=> {
-              console.log(res, 'submit vehicle');
-            });
-            this.getVehicles();
-            this.getParking();
-            this.mensaje = "ok";
-            this.vehicle = {};
-            this.errors = {};
-          } catch (error) {
+       async submit_or_update() {
+        try {
+          if (this.mostrarButtonCancel) { 
+              await axios.put(`http://127.0.0.1:8000/api/v1/vehicles/${this.vehicle.id}`, this.vehicle).then((res) => {
+                  console.log(res, 'edit vehicle');
+                  this.mensaje = "ok_edit";
+              });
+          } else {
+              await axios.post("http://127.0.0.1:8000/api/v1/vehicles", this.vehicle).then((res) => {
+                  console.log(res, 'submit vehicle');
+                  this.mensaje = "ok_submit";
+              });
+          }
+          this.getVehicles();
+          this.getParking();
+          this.reset_vehicle();
+          this.errors = {};
+        } catch (error) {
           if (error.response) {
               this.errors = error.response.data.errors;
           }
           this.mensaje = "error";
-          }
-          setTimeout(() => {
-              this.mensaje = "";
-          }, 1200);
-        },
-      },
- 
-    };
+        }
+        setTimeout(() => {
+          this.mensaje = "";
+        }, 1200);
+        }
+        }
+        
+      };
   </script>
   

@@ -1,11 +1,7 @@
 <template>
-
   <div class="card">
     <div class="card-header text-success d-flex align-items-center">
       <h5 class="flex-grow-1 text-center">Ingreso de camiones</h5>
-      <div class="ms-auto">
-        <label_añadir :title="title_label" :size_label="size_label" :icon_label="icon_label" @toggleFormulario="$emit('toggleFormulario')" />
-      </div>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -43,7 +39,7 @@
                 <button_comp :menu="menu"  :size_button="size_button" :icon="icon_button_delete" :text_color="text_color_button_delete"
                 @click="delete_vehicle(vehicle.id)"  />
                 <button_comp :menu="menu"  :size_button="size_button" :icon="icon_button_edit" :text_color="text_color_button_edit"
-                @click="delete_vehicle(vehicle.id)" />
+                @click="show_edit_vehicle(vehicle.id)" />
               </td>
             </tr>
           </tbody>
@@ -70,6 +66,9 @@ import label_añadir from "@/components/label_añadir.vue";
 
 export default {
   name: "table_list",
+  emit: {
+    vehicle: Object
+  },
   props: {
     vehicles: Array,
     cargando: Boolean,
@@ -83,6 +82,7 @@ export default {
   },
   data(){
     return{
+      vehicle: {},
       icon_button_delete: `<i class="bi bi-trash-fill"></i>`,
       text_color_button_delete: "text-danger",
       size_button: "btn-dm",
@@ -107,6 +107,19 @@ export default {
       } catch (error) {
         console.error("Error al guardar:", error);
         this.mensaje = "error"
+      }
+      setTimeout(() => {
+                this.mensaje = "";
+            }, 1200);
+    },
+    async show_edit_vehicle(id){
+      try {
+        await axios.get(`http://127.0.0.1:8000/api/v1/vehicles/${id}`).then((res)=>{
+          this.$emit("vehicle", res.data);
+        });
+      } catch (error) {
+        console.error("Error al mostrar los datos del vehiculo:", error);
+        this.mensaje = "error_show_vehicle"
       }
       setTimeout(() => {
                 this.mensaje = "";

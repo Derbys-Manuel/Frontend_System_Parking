@@ -6,10 +6,7 @@
 export default {
     name: 'button_comp',
     props: {
-        color_button: {
-            type: String,
-            required: false,
-        },
+        color_button:String,
         size_button: String,
         title: String,
         icon: String,

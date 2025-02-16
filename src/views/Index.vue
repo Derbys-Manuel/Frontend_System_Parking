@@ -3,15 +3,15 @@
   <div class="row"> 
     <div  class="col-12">
       <transition name="slide_form">
-        <div class="mt-2" v-if="mostrarFormulario">
-          <form_vehicles :getVehicles="getVehicles" :getParking="getParking"  :title="title_button" :size_button="size_button" :color_button="color_button" :title_form="title_form" />
+        <div class="mt-2">
+          <form_vehicles :getVehicles="getVehicles" :getParking="getParking" :vehicle_edit="vehicle_edit" :title_form="title_form" />
         </div>
       </transition>
     </div>
   </div>
   <div class="row mt-2">
     <div class="col-sm-12 col-md-7 col-lg-8">
-      <table_list_vehicles :vehicles="vehicles" @toggleFormulario="toggleFormulario" :getParking="getParking" :getVehicles="getVehicles" :cargando="cargando" />
+      <table_list_vehicles :vehicles="vehicles"  @vehicle="vehicle_show_edit" :getParking="getParking" :getVehicles="getVehicles" :cargando="cargando" />
     </div>
     <div class="col-sm-12 col-md-5 col-lg-4">
       <table_list_cochera :vehicles="vehicles_parking" :cargando="cargando" />
@@ -42,13 +42,10 @@ export default {
   data() {
     return {
       vehicles: null,
+      vehicle_edit: {},
       vehicles_parking: null,
       cargando: false,
-      mostrarFormulario: false,
       title_form: "Placa",
-      title_button: "Agregar",
-      size_button: "btn-md", 
-      color_button: "btn-success",
       title_modal_category: 'Formulario Categorias',
       id_modal_category: "modal_category",
       title_modal_product:'Formulario Producto',
@@ -62,10 +59,6 @@ export default {
     this.getParking();
   },
   methods: {
-    
-    toggleFormulario() {
-      this.mostrarFormulario = !this.mostrarFormulario;
-    },
     async getVehicles() {
       this.cargando = true;
       try {
@@ -89,8 +82,11 @@ export default {
         console.error("Error al obtener los vehículos:", error);
       }
       this.cargando = false;
+    },
+    vehicle_show_edit(vehicle){
+      this.vehicle_edit = vehicle;
+      console.log(this.vehicle_edit, 'vehicle por editar')
     }
-
   },
 };
 </script>

@@ -1,7 +1,6 @@
 <template>
   <label 
-    :class="['menu', 'fs-5', 'text-success', 'form-label', 'label_style', size_label]" style="white-space: nowrap;" 
-    @click="$emit('toggleFormulario')">
+    :class="['menu', 'fs-5', 'text-success', 'form-label', 'label_style', size_label]" style="white-space: nowrap;">
     [<span v-html="icon_label"></span>]
   </label>
 </template>
