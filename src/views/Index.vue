@@ -10,7 +10,7 @@
       </transition>
     </div>
   </div>
-  <div class="row mt-3">
+  <div class="row align mt-3">
     <div class="col-4 ">
       <etiqueta  :calculo="calculo"  :color_text="color_etiqueta_1" :efecto="efecto_etiqueta_1" :icon="icon_etiqueta_1" :color="color_etiqueta_1" :title="title_etiqueta_1" />
     </div>
