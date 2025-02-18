@@ -1,9 +1,9 @@
 <template>
-  <div class="card">
-    <div class="card-header text-success d-flex align-items-center">
-      <h5 class="flex-grow-1 text-center">Ingreso de camiones</h5>
-    </div>
+  <div class="card ">
     <div class="card-body">
+      <div class="card-title text-success d-flex align-items-center">
+        <h5 class="flex-grow-1 text-center">Ingreso de camiones</h5>
+      </div>
       <div class="table-responsive">
         <table class="table  table-bordered text-center table-sm">
           <thead>
@@ -79,12 +79,12 @@ export default {
   data(){
     return{
       vehicle: {},
-      icon_button_delete: `<i class="bi bi-trash-fill"></i>`,
+      icon_button_delete: `<i class="fa-solid fa-trash-can fa-lg" style="color: #f00000;"></i>`,
       text_color_button_delete: "text-danger",
       size_button: "btn-dm",
       size_text: 'fs-6',
       menu: 'menu',
-      icon_button_edit: `<i class="bi bi-pencil-fill"></i>`,
+      icon_button_edit: `<i class="fa-duotone fa-solid fa-pencil fa-lg" style="--fa-primary-color: #FFD43B;"></i>`,
       text_color_button_edit: "text-warning",
       title_label: "Añadir",
       icon_label: `<i class="bi bi-plus fs-5"></i>`,

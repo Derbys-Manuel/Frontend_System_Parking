@@ -1,9 +1,9 @@
 <template>
   <div class="card">
-    <div class="card-header text-center text-success">
-        <h5>Control de cochera</h5>
-    </div>
     <div class="card-body">
+      <div class="card-title text-center text-success">
+        <h5>Control de cochera</h5>
+      </div>
       <div class="table-responsive">
         <table class="table table-bordered text-center">
           <thead>
@@ -31,9 +31,11 @@
               <td v-text="vehicle.fecha"></td>
               <td v-text="vehicle.hora"></td>
               <td>
-                <span class="badge rounded-pill text-bg-danger" v-text="vehicle.cochera"></span>
+                <span class="badge rounded-pill text-bg-danger fs-6" style="padding: 7px;" v-text="vehicle.cochera"></span>
               </td>
-              <td><span class="menu" v-html="icon"></span></td>
+              <td>
+                  <span class="menu " ><i class="fa-solid fa-paper-plane fa-lg" style="color: #01a858;"></i></span>
+              </td>
             </tr>
           </tbody>
         </table>

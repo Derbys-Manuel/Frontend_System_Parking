@@ -1,11 +1,13 @@
-<template>
+<template id="body_bg">
   <Navbar @toggleSidebar="toggleSidebar" />
+
   <div class="d-flex vh-100">
       <transition name="slide">
         <div v-if="mostrarSidebar" class="d-block hv-100 mt-2" id="color_sidebar">
           <sidebar />
         </div>
       </transition>
+      
       <div class="container-fluid">
           <router-view  />
       </div>
@@ -17,11 +19,13 @@
 import Navbar from './components/navbar.vue';
 import sidebar from "@/components/sidebar.vue";
 
+
 export default {
   name: "app",
   components: {
     Navbar,
     sidebar,
+ 
   },
   data() {
     return {
@@ -40,9 +44,13 @@ export default {
 #nav-bag {
   background-color: #01a858;
 }
+#body_bg {
+  background:aquamarine;
+}
 #color_sidebar{
   background-color: #01a858;
   width: 200px;
+  height: 1000px;
 }
 .slide-enter-active,
 .slide-leave-active {

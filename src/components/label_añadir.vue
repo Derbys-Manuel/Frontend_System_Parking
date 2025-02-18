@@ -1,7 +1,9 @@
 <template>
   <label 
     :class="['menu', 'fs-5', 'text-success', 'form-label', 'label_style', size_label]" style="white-space: nowrap;">
-    [<span v-html="icon_label"></span>]
+    [<span >
+        <i class="fa-solid fa-plus "></i>
+    </span>]
   </label>
 </template>
 
@@ -14,10 +16,7 @@ export default {
     icon_label: String,
   }
 }
-  
- 
 </script>
-
 <style>
 .label_style:hover {
   cursor: pointer;

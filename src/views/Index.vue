@@ -1,15 +1,27 @@
 <template>
   <alert v-if="mensaje" :title_alert="mensaje" :alert_color="alert_color" />
+  
   <div class="row"> 
     <div  class="col-12">
       <transition name="slide_form">
-        <div class="mt-2">
+        <div class="mt-3">
           <form_vehicles @show-alert="mostrarAlerta" :getVehicles="getVehicles" :getParking="getParking" :vehicle_edit="vehicle_edit" :title_form="title_form" />
         </div>
       </transition>
     </div>
   </div>
-  <div class="row mt-2">
+  <div class="row mt-3">
+    <div class="col-4 ">
+      <etiqueta :color_text="color_etiqueta_1" :efecto="efecto_etiqueta_1" :icon="icon_etiqueta_1" :color="color_etiqueta_1" :title="title_etiqueta_1" />
+    </div>
+    <div class="col-4 ">
+      <etiqueta :color_text="color_etiqueta_2" :efecto="efecto_etiqueta_2" :icon="icon_etiqueta_2" :color="color_etiqueta_2" :title="title_etiqueta_2" />
+    </div>
+    <div class="col-4">
+      <etiqueta :color_texto_detallado="color_etiqueta_3" :efecto="efecto_etiqueta_3" :icon="icon_etiqueta_3" :color_detallado="color_etiqueta_3" :title="title_etiqueta_3" />
+    </div>
+  </div>
+  <div class="row mt-3">
     <div class="col-sm-12 col-md-7 col-lg-7">
       <table_list_vehicles @show-alert="mostrarAlerta" :vehicles="vehicles"  @vehicle="vehicle_show_edit" :getParking="getParking" :getVehicles="getVehicles" :cargando="cargando" />
     </div>
@@ -28,6 +40,8 @@ import axios from "axios";
 import label_añadir from "@/components/label_añadir.vue";
 import table_list_cochera from "@/components/table_list_cochera.vue";
 import alert from "@/components/alert.vue"
+import etiqueta from "@/components/etiqueta.vue";
+
 
 export default {
   name: "index",
@@ -38,7 +52,8 @@ export default {
     form_vehicles,
     label_añadir,
     modal_comp,
-    alert
+    alert,
+    etiqueta
   },
   provide() {
     return {
@@ -59,7 +74,26 @@ export default {
       placeholder_category: "Categoria",
       placeholder_product: "Producto",
       mensaje: "",
-      alert_color: ""
+      alert_color: "",
+
+      icon_etiqueta_1:"fa-truck-moving",
+      efecto_etiqueta_1:"fa-bounce",
+      color_etiqueta_1:"text-success",
+      title_etiqueta_1:"Camiones del día:",
+      color_text_1: 'text-bg-success',
+
+      icon_etiqueta_2:"fa-truck-moving",
+      efecto_etiqueta_2:"fa-bounce",
+      color_etiqueta_2:"text-danger",
+      title_etiqueta_2:"Salidas del día:",
+      color_text_2: 'text-bg-danger',
+
+      icon_etiqueta_3:"fa-money-bill-trend-up",
+      efecto_etiqueta_3:"fa-bounce",
+      color_etiqueta_3:"color: #63E6BE;",
+      title_etiqueta_3:"Total de ingresos: ",
+      color_text_3: 'color: #63E6BE;'
+
     };
   },
   mounted() {
