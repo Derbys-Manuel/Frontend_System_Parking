@@ -3,7 +3,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h3>{{ modal_title }}</h3>
+                    <h3 v-text="modal_title"></h3>
                     <form @submit.prevent="submit"  class="form-control">
                         <div class="row g-3 align-items-center mt-2 justify-content-center w-100 mb-2">
                             <div v-if="id_btn_modal=='modal_category'" class="col-auto  " >
@@ -21,7 +21,6 @@
                             </div>
                         </div>       
                     </form>
-                    <message :mensaje="mensaje" :size_text="size_text" />
                 </div>
             </div>
         </div>
@@ -32,12 +31,10 @@
 <script>
 import button_comp from './button_comp.vue';
 import axios from 'axios';
-import message from './message.vue';
-export default {
 
+export default {
     components: {
         button_comp,
-        message
     },
     props: {
         modal_title: String,
@@ -45,15 +42,18 @@ export default {
         placeholder_name: String,
         get_category_or_product: Function
     },
+    emits: [
+        "show-alert"
+    ],
     data()
     {
       return{
             title_button: "Submit",
             color_button: 'btn-success',
             size_button: 'btn-dm',
-            mensaje: '',
             size_text: 'fs-6',
             mensaje: "",
+
             category: {
                 name: "",
                 monto: "",
@@ -64,6 +64,7 @@ export default {
             errors: {},
         }
     },
+    inject: ['mostrarAlerta'],
     methods: {
     async submit() {
       try {
@@ -79,18 +80,16 @@ export default {
         this.product = {};
         this.category = {};
         this.errors= {};
-        this.mensaje = "ok";
+        this.mostrarAlerta("¡Registro guardado con éxito!", "alert-success");
         this.get_category_or_product();
       } catch (error) {
         if(error.response){
             this.errors = error.response.data.errors;
         }
-        this.mensaje = "error"
+        this.mostrarAlerta("¡¡Error al almacenar registro!!", "alert-danger");
+
       }
-      setTimeout(() => {
-                this.mensaje = "";
-            }, 1200);
-        },
+    }
     }
 }
 

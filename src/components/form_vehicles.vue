@@ -30,12 +30,9 @@
         </div>
       </div>
     </form>
-    <div class="d-flex justify-content-center">
-      <message :mensaje="mensaje" :size_text="size_message" />
-    </div>
-    <modal_comp :get_category_or_product="getCategories" :modal_title="title_modal_category" :id_btn_modal="id_modal_category" 
+    <modal_comp :get_category_or_product="getCategories"  :modal_title="title_modal_category" :id_btn_modal="id_modal_category" 
     :placeholder_name="placeholder_category" />
-    <modal_comp :get_category_or_product="getProducts" :modal_title="title_modal_product"  :id_btn_modal="id_modal_product" 
+    <modal_comp :get_category_or_product="getProducts"  :modal_title="title_modal_product"  :id_btn_modal="id_modal_product" 
     :placeholder_name="placeholder_product" />
   </template>
   
@@ -46,7 +43,6 @@
   import label_añadir from "./label_añadir.vue";
   import select_comp from './select_comp.vue';
   import axios from 'axios';
-  import message from "./message.vue";
 
   const now = new Date();
   const fechaActual = now.toISOString().split('T')[0]; 
@@ -59,7 +55,6 @@
       label_añadir,
       select_comp,
       modal_comp,
-      message, 
     },
 
     data(){
@@ -77,7 +72,7 @@
         category: 'categoria',
         title_label: "",
         mensaje: "",
-        size_message: "fs-6",
+        alert_color: "",
         title_select_product: "Productos",
         title_select_category: "Categorias",
         icon_label: `<i class="bi bi-plus fs-5"></i>`,
@@ -100,6 +95,10 @@
 
       };
     },
+    emits:[
+      "show-alert"
+    ]  
+    ,
     props: {
         title_form: String,
         getVehicles: Function,
@@ -165,12 +164,13 @@
           if (this.mostrarButtonCancel) { 
               await axios.put(`http://127.0.0.1:8000/api/v1/vehicles/${this.vehicle.id}`, this.vehicle).then((res) => {
                   console.log(res, 'edit vehicle');
-                  this.mensaje = "ok_edit";
+                  this.$emit("show-alert", "Camión actualizado correctamente", "alert-success");
               });
           } else {
               await axios.post("http://127.0.0.1:8000/api/v1/vehicles", this.vehicle).then((res) => {
                   console.log(res, 'submit vehicle');
-                  this.mensaje = "ok_submit";
+                  this.$emit("show-alert", "Camión ingresado correctamente", "alert-success");
+
               });
           }
           this.getVehicles();
@@ -181,11 +181,11 @@
           if (error.response) {
               this.errors = error.response.data.errors;
           }
-          this.mensaje = "error";
+          this.$emit("show-alert", "Error 401", "alert-danger");
+
+
         }
-        setTimeout(() => {
-          this.mensaje = "";
-        }, 1200);
+        
         }
         }
         

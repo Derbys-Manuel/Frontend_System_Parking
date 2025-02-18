@@ -45,9 +45,6 @@
           </tbody>
         </table>
       </div>
-      <div class="d-flex justify-content-center">
-        <message :mensaje="mensaje"  :size_text="size_text" />
-      </div>
     </div>
   </div>
 </template>
@@ -61,14 +58,14 @@
 <script>
 import button_comp from './button_comp.vue';
 import axios from 'axios';
-import message from './message.vue';
 import label_añadir from "@/components/label_añadir.vue";
 
 export default {
   name: "table_list",
-  emit: {
-    vehicle: Object
-  },
+  emits:[
+      "show-alert",
+      "vehicle"
+    ],
   props: {
     vehicles: Array,
     cargando: Boolean,
@@ -77,7 +74,6 @@ export default {
   },
   components: {
     button_comp,
-    message,
     label_añadir
   },
   data(){
@@ -86,7 +82,6 @@ export default {
       icon_button_delete: `<i class="bi bi-trash-fill"></i>`,
       text_color_button_delete: "text-danger",
       size_button: "btn-dm",
-      mensaje: '',
       size_text: 'fs-6',
       menu: 'menu',
       icon_button_edit: `<i class="bi bi-pencil-fill"></i>`,
@@ -100,13 +95,13 @@ export default {
     async delete_vehicle(id){
       try {
         await axios.delete(`http://127.0.0.1:8000/api/v1/vehicles/${id}`);
-        this.mensaje = "delete";
+        this.$emit("show-alert", "Registro eliminado", "alert-success");
+
         this.getVehicles();
         this.getParking();
 
       } catch (error) {
         console.error("Error al guardar:", error);
-        this.mensaje = "error"
       }
       setTimeout(() => {
                 this.mensaje = "";
@@ -119,7 +114,7 @@ export default {
         });
       } catch (error) {
         console.error("Error al mostrar los datos del vehiculo:", error);
-        this.mensaje = "error_show_vehicle"
+        this.$emit("show-alert", "Error al enviar data para editar", "alert-danger");
       }
       setTimeout(() => {
                 this.mensaje = "";

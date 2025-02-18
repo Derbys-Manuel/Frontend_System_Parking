@@ -1,19 +1,19 @@
 <template>
-  
+  <alert v-if="mensaje" :title_alert="mensaje" :alert_color="alert_color" />
   <div class="row"> 
     <div  class="col-12">
       <transition name="slide_form">
         <div class="mt-2">
-          <form_vehicles :getVehicles="getVehicles" :getParking="getParking" :vehicle_edit="vehicle_edit" :title_form="title_form" />
+          <form_vehicles @show-alert="mostrarAlerta" :getVehicles="getVehicles" :getParking="getParking" :vehicle_edit="vehicle_edit" :title_form="title_form" />
         </div>
       </transition>
     </div>
   </div>
   <div class="row mt-2">
-    <div class="col-sm-12 col-md-7 col-lg-8">
-      <table_list_vehicles :vehicles="vehicles"  @vehicle="vehicle_show_edit" :getParking="getParking" :getVehicles="getVehicles" :cargando="cargando" />
+    <div class="col-sm-12 col-md-7 col-lg-7">
+      <table_list_vehicles @show-alert="mostrarAlerta" :vehicles="vehicles"  @vehicle="vehicle_show_edit" :getParking="getParking" :getVehicles="getVehicles" :cargando="cargando" />
     </div>
-    <div class="col-sm-12 col-md-5 col-lg-4">
+    <div class="col-sm-12 col-md-5 col-lg-5">
       <table_list_cochera :vehicles="vehicles_parking" :cargando="cargando" />
     </div>
   </div>
@@ -27,7 +27,7 @@ import modal_comp from "@/components/modal_comp.vue";
 import axios from "axios";
 import label_añadir from "@/components/label_añadir.vue";
 import table_list_cochera from "@/components/table_list_cochera.vue";
-
+import alert from "@/components/alert.vue"
 
 export default {
   name: "index",
@@ -37,7 +37,13 @@ export default {
     button_comp,
     form_vehicles,
     label_añadir,
-    modal_comp
+    modal_comp,
+    alert
+  },
+  provide() {
+    return {
+      mostrarAlerta: this.mostrarAlerta
+    };
   },
   data() {
     return {
@@ -52,11 +58,14 @@ export default {
       id_modal_product: "modal_product",
       placeholder_category: "Categoria",
       placeholder_product: "Producto",
+      mensaje: "",
+      alert_color: ""
     };
   },
   mounted() {
     this.getVehicles();
     this.getParking();
+
   },
   methods: {
     async getVehicles() {
@@ -83,11 +92,22 @@ export default {
       }
       this.cargando = false;
     },
+    
     vehicle_show_edit(vehicle){
       this.vehicle_edit = vehicle;
       console.log(this.vehicle_edit, 'vehicle por editar')
+    },
+    mostrarAlerta(mensaje, color) {
+      this.mensaje = mensaje;
+      this.alert_color = color;
+      setTimeout(() => {
+        this.mensaje = ""; 
+      }, 2000);
     }
+    
   },
+  
+  
 };
 </script>
 <style>

@@ -2,7 +2,7 @@
     <select :class="['form-select', size_select, {'border-danger':errors.category_id && errors.category_id[0]}]" :value="modelValue" @change="$emit('update:modelValue', $event.target.value)"
      aria-label="Default select example">
         <option value=""  disabled :label="title_select"></option>
-        <option v-for="cate in element" :key="cate.id"  :value="cate.id" :label="[cate.name,' s/ ', cate.monto]"></option>      
+        <option v-for="cate in element" :key="cate.id" :value="cate.id" :label="`${cate.name} ${cate.monto ? 's/ ' + cate.monto : ''}`"></option>      
     </select>
 </template>
 <script>
