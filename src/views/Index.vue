@@ -4,7 +4,7 @@
   <div class="row"> 
     <div  class="col-12">
       <transition name="slide_form">
-        <div class="mt-3">
+        <div class="mt-2">
           <form_vehicles @show-alert="mostrarAlerta" :getVehicles="getVehicles" :getParking="getParking" :vehicle_edit="vehicle_edit" :title_form="title_form" />
         </div>
       </transition>
@@ -12,13 +12,13 @@
   </div>
   <div class="row mt-3">
     <div class="col-4 ">
-      <etiqueta :color_text="color_etiqueta_1" :efecto="efecto_etiqueta_1" :icon="icon_etiqueta_1" :color="color_etiqueta_1" :title="title_etiqueta_1" />
+      <etiqueta  :calculo="calculo"  :color_text="color_etiqueta_1" :efecto="efecto_etiqueta_1" :icon="icon_etiqueta_1" :color="color_etiqueta_1" :title="title_etiqueta_1" />
     </div>
     <div class="col-4 ">
-      <etiqueta :color_text="color_etiqueta_2" :efecto="efecto_etiqueta_2" :icon="icon_etiqueta_2" :color="color_etiqueta_2" :title="title_etiqueta_2" />
+      <etiqueta :calculo="calculo"  :color_text="color_etiqueta_2" :efecto="efecto_etiqueta_2" :icon="icon_etiqueta_2" :color="color_etiqueta_2" :title="title_etiqueta_2" />
     </div>
     <div class="col-4">
-      <etiqueta :color_texto_detallado="color_etiqueta_3" :efecto="efecto_etiqueta_3" :icon="icon_etiqueta_3" :color_detallado="color_etiqueta_3" :title="title_etiqueta_3" />
+      <etiqueta  :calculo="calculo" :color_texto_detallado="color_etiqueta_3" :efecto="efecto_etiqueta_3" :icon="icon_etiqueta_3" :color_detallado="color_etiqueta_3" :title="title_etiqueta_3" />
     </div>
   </div>
   <div class="row mt-3">
@@ -79,20 +79,21 @@ export default {
       icon_etiqueta_1:"fa-truck-moving",
       efecto_etiqueta_1:"fa-bounce",
       color_etiqueta_1:"text-success",
-      title_etiqueta_1:"Camiones del día:",
+      title_etiqueta_1:"Camiones del día: ",
       color_text_1: 'text-bg-success',
 
       icon_etiqueta_2:"fa-truck-moving",
       efecto_etiqueta_2:"fa-bounce",
       color_etiqueta_2:"text-danger",
-      title_etiqueta_2:"Salidas del día:",
+      title_etiqueta_2:"Salidas del día: ",
       color_text_2: 'text-bg-danger',
 
       icon_etiqueta_3:"fa-money-bill-trend-up",
       efecto_etiqueta_3:"fa-bounce",
       color_etiqueta_3:"color: #63E6BE;",
       title_etiqueta_3:"Total de ingresos: ",
-      color_text_3: 'color: #63E6BE;'
+      color_text_3: 'color: #63E6BE;',
+      calculo: "20"
 
     };
   },

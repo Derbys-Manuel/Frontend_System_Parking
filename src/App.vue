@@ -1,4 +1,4 @@
-<template id="body_bg">
+<template>
   <Navbar @toggleSidebar="toggleSidebar" />
 
   <div class="d-flex vh-100">
@@ -43,9 +43,6 @@ export default {
 <style>
 #nav-bag {
   background-color: #01a858;
-}
-#body_bg {
-  background:aquamarine;
 }
 #color_sidebar{
   background-color: #01a858;
